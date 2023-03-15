@@ -3,7 +3,12 @@
   "description": "",
   "scripts": {
     "start": "node server.js",
-    "nodemon": "nodemon --exec babel-node ./server.js"
+    "nodemon": "nodemon --exec babel-node ./server.js",
+    "heroku-postbuild": "babel server.js --out-dir dist --copy-files && babel src --out-dir dist/src --copy-files"
+  },
+  "engines": {
+    "node": "16.15.0",
+    "npm": "8.5.5"
   },
   "keywords": [],
   "author": "",
