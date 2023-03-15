@@ -10,7 +10,8 @@
     "build-babel": "babel -d ./build ./src -s",
     "build:server" : "babel src -d build",
     "build": "npm run clean && npm run build-babel",
-    "start": "npm run build:server && node ./build/server.js"
+    "start": "npm run build:server && node ./build/server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix build && npm run build"
   },
   "engines": {
     "node": "16.15.0",
