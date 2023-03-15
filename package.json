@@ -1,8 +1,12 @@
 {
   "name": "webrtc-server",
   "description": "",
+  "private": true,
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "start": "node --experimental-modules server.js",
     "nodemon": "nodemon --exec babel-node ./server.js"
   },
   "engines": {
