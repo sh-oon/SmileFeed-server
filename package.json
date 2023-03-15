@@ -5,9 +5,11 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node ./server.js",
-    "nodemon": "nodemon --exec babel-node ./server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix . && npm run build --prefix ."
+    "nodemon": "nodemon --exec babel-node /src/server.js",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel -d ./build ./src -s",
+    "build": "npm run clean && npm run build-babel",
+    "start": "npm run build && node ./build/server.js"
   },
   "engines": {
     "node": "16.15.0",
