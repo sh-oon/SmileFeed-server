@@ -8,8 +8,9 @@
     "nodemon": "nodemon --exec babel-node /src/server.js",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",
+    "build:server" : "babel src -d build",
     "build": "npm run clean && npm run build-babel",
-    "start": "npm run build && node ./build/server.js"
+    "start": "npm run build:server && node ./build/server.js"
   },
   "engines": {
     "node": "16.15.0",
