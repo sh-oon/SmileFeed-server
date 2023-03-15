@@ -7,7 +7,7 @@
   "scripts": {
     "nodemon": "nodemon --exec babel-node /src/server.js",
     "dev:server": "nodemon --exec babel-node src/server.js",
-    "build:server": "babel src --outdir build",
+    "build:server": "babel src --out-dir build",
     "copyAll": "cp -r src build",
     "build": "npm run build:server && npm run copyAll",
     "prebuild": "rm -rf build",
