@@ -2,7 +2,7 @@
   "name": "webrtc-server",
   "description": "",
   "scripts": {
-    "start": "node ./server.js",
+    "start": "node server.js",
     "nodemon": "nodemon --exec babel-node ./server.js"
   },
   "keywords": [],

@@ -8,7 +8,7 @@ const cors = require("cors")
 const app = express();
 const server = http.createServer(app);
 app.use(bodyParser.json());
-app.use(cors({origin: 'https://diary-vlog.herokuapp.com', credentials: true}))
+app.use(cors({origin: 'https://smile-feed-server.herokuapp.com', credentials: true}))
 
 const PORT = process.env.PORT || 3000;
 
