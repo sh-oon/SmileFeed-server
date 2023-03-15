@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-import { response } from "../common.js";
+const response = require("../common.js").response;
 const mongo = require("../mongo/mongo.js");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
