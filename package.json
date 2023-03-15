@@ -6,12 +6,13 @@
   "main": "server.js",
   "scripts": {
     "nodemon": "nodemon --exec babel-node /src/server.js",
-    "clean": "rm -rf build && mkdir build",
-    "build-babel": "babel -d ./build ./src -s",
-    "build:server" : "babel src -d build",
-    "build": "npm run clean && npm run build-babel",
-    "start": "npm run build:server && node ./build/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
+    "dev:server": "nodemon --exec babel-node src/server.js",
+    "build:server": "babel src --outdir build",
+    "copyAll": "cp -r src build",
+    "build": "npm run build:server && npm run copyAll",
+    "prebuild": "rm -rf build",
+    "start": "PRODUCTION=true node build/server.js",
+    "prestart": "npm run build"
   },
   "engines": {
     "node": "16.15.0",
