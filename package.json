@@ -6,7 +6,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node --experimental-modules server.js",
+    "start": "node ./server.js",
     "nodemon": "nodemon --exec babel-node ./server.js"
   },
   "engines": {
