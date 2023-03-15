@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node ./server.js",
     "nodemon": "nodemon --exec babel-node ./server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix . && npm run build --prefix ."
   },
   "engines": {
     "node": "16.15.0",
