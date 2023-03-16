@@ -1,11 +1,12 @@
 const express = require("express");
+const { argumentCheck } = require("../common.js");
 const router = express.Router();
 const response = require("../common.js").response;
 const mongo = require("../mongo/mongo.js");
 require("dotenv").config();
-const jwt = require("jsonwebtoken");
 
 router.post("/profile", async (req, res) => {
+  argumentCheck(res, [req.tokenInfo._id]);
   const user = await mongo.User.findById(req.tokenInfo._id);
 
   if (!user) 

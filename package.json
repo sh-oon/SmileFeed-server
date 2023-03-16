@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "nodemon": "nodemon --exec babel-node /src/server.js",
+    "nodemon": "nodemon --exec babel-node src/server.js",
     "dev:server": "nodemon --exec babel-node src/server.js",
     "build:server": "babel src --out-dir build",
     "copyAll": "cp -r src build",

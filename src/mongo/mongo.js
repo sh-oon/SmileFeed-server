@@ -76,22 +76,23 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 }
 
-const Diary = new mongoose.Schema({
+const diarySchema = new mongoose.Schema({
   userID: String,
-  title: String,
   content: String,
   date: String,
-  weather: String,
   emotion: String,
   image: String,
+  thumbnail: String,
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
 
 // mongoose 모델
 const User = mongoose.model("User", userSchema);
+const Diary = mongoose.model("Diary", diarySchema);
 
 
 module.exports = {
   User,
+  Diary,
 };

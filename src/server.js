@@ -16,6 +16,7 @@ const loginRouter = require('./routes/authrization.js');
 const user = require('./routes/user.js');
 app.use('/v1/api/auth', loginRouter);
 app.use('/v1/api/user', auth, user);
+app.use('/v1/api/feed', auth, require('./routes/feed.js'));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
