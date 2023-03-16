@@ -11,7 +11,7 @@ router.get("/profile", async (req, res) => {
 
   if (!user) 
     return response(res, 404, { message: "존재하지 않는 유저입니다." });
-  
+
   response(res, 200, {
     message: "프로필 조회 성공",
     data: {

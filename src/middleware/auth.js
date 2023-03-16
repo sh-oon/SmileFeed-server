@@ -6,8 +6,7 @@ const jwt = require('jsonwebtoken');
 const { argumentCheck } = require('../common');
 
 const auth = async (req, res, next) => {
-	argumentCheck(res, [req.headers['authorization']]);
-  const accessToken = req.headers['authorization'].split(' ')[1];
+  const accessToken = req.headers['authorization']?.split(' ')[1];
 
   if (accessToken == null) {
 		res.status(401).json({status: 403, message: 'Authentication fail'});
