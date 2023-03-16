@@ -3,8 +3,10 @@
 // 로그인이 되어있으면 다음 미들웨어로 넘어감
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
+const { argumentCheck } = require('../common');
 
 const auth = async (req, res, next) => {
+	argumentCheck(res, [req.headers['authorization']]);
   const accessToken = req.headers['authorization'].split(' ')[1];
 
   if (accessToken == null) {
