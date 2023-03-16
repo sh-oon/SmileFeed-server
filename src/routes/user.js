@@ -5,7 +5,7 @@ const response = require("../common.js").response;
 const mongo = require("../mongo/mongo.js");
 require("dotenv").config();
 
-router.post("/profile", async (req, res) => {
+router.get("/profile", async (req, res) => {
   argumentCheck(res, [req.tokenInfo._id]);
   const user = await mongo.User.findById(req.tokenInfo._id);
 
