@@ -40,8 +40,24 @@ router.post("/register", (req, res) => {
   user
     .save()
     .then((result) => {
-      console.log("success register", result);
-      response(res, 200, { message: "회원가입 성공" });
+      const setting = new mongo.Setting({
+        userID: result.userID,
+        theme: "light",
+        passwordLock: false,
+        alert: true,
+        font: "default",
+        fontSize: "default",
+        backgroundColor: "default",
+        syncronize: false,
+      });
+
+      setting.save().then((set)=>{
+        console.log("success register", result);
+        console.log("success setting", set);
+        response(res, 200, { message: "회원가입 성공" });
+      }).catch((e) => {
+        response(res, 404, { message: "회원가입 실패" });
+      });
     })
     .catch((err) => {
       console.log("error register", err);

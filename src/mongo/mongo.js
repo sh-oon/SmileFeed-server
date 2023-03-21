@@ -87,12 +87,25 @@ const diarySchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
+const settingSchema = new mongoose.Schema({
+  userID: String,
+  theme: String,
+  passwordLock: Boolean,
+  alert: Boolean,
+  font: String,
+  fontSize: String,
+  backgroundColor: String,
+  syncronize: Boolean,
+});
+
 // mongoose 모델
 const User = mongoose.model("User", userSchema);
 const Diary = mongoose.model("Diary", diarySchema);
+const Setting = mongoose.model("Setting", settingSchema);
 
 
 module.exports = {
   User,
   Diary,
+  Setting,
 };

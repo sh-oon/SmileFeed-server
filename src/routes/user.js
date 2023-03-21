@@ -9,7 +9,7 @@ router.get("/profile", async (req, res) => {
   argumentCheck(res, [req.tokenInfo._id]);
   const user = await mongo.User.findById(req.tokenInfo._id);
 
-  if (!user) 
+  if (!user)
     return response(res, 404, { message: "존재하지 않는 유저입니다." });
 
   response(res, 200, {
@@ -19,7 +19,40 @@ router.get("/profile", async (req, res) => {
       name: user.name,
       mobile: user.mobile,
       birth: user.birth,
-    }
+    },
+  });
+});
+
+router.get("/setting", async (req, res) => {
+  argumentCheck(res, [req.tokenInfo._id]);
+  const user = await mongo.User.findById(req.tokenInfo._id);
+  const setting = await mongo.Setting.findOne({ userID: user.userID });
+  console.log(setting);
+  response(res, 200, {
+    message: "설정 조회 성공",
+    data: {
+      userID: setting.userID,
+      theme: setting.theme,
+      passwordLock: setting.passwordLock,
+      alert: setting.alert,
+      font: setting.font,
+      fontSize: setting.fontSize,
+      backgroundColor: setting.backgroundColor,
+      syncronize: setting.syncronize,
+    },
+  });
+});
+
+router.put("/setting", async (req, res) => {
+  argumentCheck(res, [req.tokenInfo._id]);
+  const setting = await mongo.Setting.findById(req.tokenInfo._id);
+
+  if (!setting) {
+    return response(res, 404, { message: "존재하지 않는 유저입니다." });
+  }
+
+  response(res, 200, {
+    message: "설정 수정 성공",
   });
 });
 
