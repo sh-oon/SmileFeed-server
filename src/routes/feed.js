@@ -60,7 +60,6 @@ router.get("/diary", async (req, res) => {
   feeds.sort((a, b) => {
     return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
   });
-  console.log(feeds);
   // 현재 월과 이전 월, 다음 월을 구분
   let currentMonth = new Date().getMonth() + 1;
   let prevMonth = currentMonth - 1;
@@ -73,12 +72,12 @@ router.get("/diary", async (req, res) => {
   let nextMonthFeeds = [];
   // 현재 월의 feed를 담는다
   for (let i = 0; i < feeds.length; i++) {
-    console.log(feeds[i].date);
-    if (feeds[i].date.getMonth() + 1 === currentMonth) {
+    const month = Number(feeds[i].date.split('-')[1]);
+    if (month === currentMonth) {
       currentMonthFeeds.push(feeds[i]);
-    } else if (feeds[i].date.getMonth() + 1 === prevMonth) {
+    } else if (month === prevMonth) {
       prevMonthFeeds.push(feeds[i]);
-    } else if (feeds[i].date.getMonth() + 1 === nextMonth) {
+    } else if (month === nextMonth) {
       nextMonthFeeds.push(feeds[i]);
     }
   }
