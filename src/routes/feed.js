@@ -60,36 +60,10 @@ router.get("/diary", async (req, res) => {
   feeds.sort((a, b) => {
     return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
   });
-  // 현재 월과 이전 월, 다음 월을 구분
-  let currentMonth = new Date().getMonth() + 1;
-  let prevMonth = currentMonth - 1;
-  let nextMonth = currentMonth + 1;
-  // 현재 월의 feed를 담을 배열
-  let currentMonthFeeds = [];
-  // 이전 월의 feed를 담을 배열
-  let prevMonthFeeds = [];
-  // 다음 월의 feed를 담을 배열
-  let nextMonthFeeds = [];
-  // 현재 월의 feed를 담는다
-  for (let i = 0; i < feeds.length; i++) {
-    const month = Number(feeds[i].date.split('-')[1]);
-    if (month === currentMonth) {
-      currentMonthFeeds.push(feeds[i]);
-    } else if (month === prevMonth) {
-      prevMonthFeeds.push(feeds[i]);
-    } else if (month === nextMonth) {
-      nextMonthFeeds.push(feeds[i]);
-    }
-  }
-  const result = {
-    currentMonthFeeds: currentMonthFeeds,
-    prevMonthFeeds: prevMonthFeeds,
-    nextMonthFeeds: nextMonthFeeds,
-    currentMonth: currentMonth,
-  }
+  
   response(res, 200, {
     message: "피드 조회 성공",
-    data: result
+    data: feeds
   })
 });
 
