@@ -1,6 +1,6 @@
-const response = (res, stauts, data) => {
+const response = (res, status, data) => {
   res.status(200).send({
-    status: stauts,
+    status: status,
     data: data,
   });
 }

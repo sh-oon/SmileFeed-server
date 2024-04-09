@@ -16,9 +16,11 @@ const prefix = '/v1/api';
 
 const loginRouter = require('./routes/authrization.js');
 const user = require('./routes/user.js');
+const feed = require('./routes/feed.js');
+
 app.use(prefix + '/auth', loginRouter);
 app.use(prefix + '/user', auth, user);
-app.use(prefix + '/feed', auth, require('./routes/feed.js'));
+app.use(prefix + '/feed', auth, feed);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

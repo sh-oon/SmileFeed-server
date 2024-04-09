@@ -14,10 +14,6 @@
     "start": "PRODUCTION=true node build/server.js",
     "prestart": "npm run build"
   },
-  "engines": {
-    "node": "16.15.0",
-    "npm": "8.5.5"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",

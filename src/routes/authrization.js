@@ -6,15 +6,19 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const userList = await mongo.User.find();
+  const {email, password} = req.body;
+  const userList = await mongo.User.find({
+    email: email,
+    password: password,
+  });
+  console.log(userList)
   const user = userList.find((user) => user.email === email);
   if (!user)
-    return response(res, 404, { message: "존재하지 않는 유저입니다." });
+    return response(res, 404, {message: "존재하지 않는 유저입니다."});
   if (user.password !== password)
-    return response(res, 404, { message: "비밀번호가 일치하지 않습니다." });
+    return response(res, 404, {message: "비밀번호가 일치하지 않습니다."});
 
-  const { accessToken, refreshToken } = await generateTokens(user);
+  const {accessToken, refreshToken} = await generateTokens(user);
   response(res, 200, {
     message: "로그인 성공",
     data: {
@@ -28,11 +32,12 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", (req, res) => {
   let userData = req.body;
+  console.log(userData)
   const user = new mongo.User({
     email: userData.email,
     password: userData.password,
     name: userData.name,
-    mobile: userData.phone,
+    mobile: userData.mobile,
     birth: userData.birth,
     gender: userData.gender,
   });
@@ -51,28 +56,22 @@ router.post("/register", (req, res) => {
         syncronize: false,
       });
 
-      setting.save().then((set)=>{
-        console.log("success register", result);
-        console.log("success setting", set);
-        response(res, 200, { message: "회원가입 성공" });
-      }).catch((e) => {
-        response(res, 404, { message: "회원가입 실패" });
-      });
+      response(res, 200, {message: "회원가입 성공"});
     })
     .catch((err) => {
-      console.log("error register", err);
-      response(res, 404, { message: "회원가입 실패" });
+      // console.log("error register", err);
+      response(res, 404, {message: err.message});
     });
 });
 
 router.post("/refresh", async (req, res) => {
-  const { refreshToken } = req.body;
-  if (!refreshToken) return response(res, 401, { message: "로그인이 필요합니다." });
+  const {refreshToken} = req.body;
+  if (!refreshToken) return response(res, 401, {message: "로그인이 필요합니다."});
   const user = await mongo.User.findOne({
-    refreshTokens: { $elemMatch: { token: refreshToken } },
+    refreshTokens: {$elemMatch: {token: refreshToken}},
   });
-  if (!user) return response(res, 403, { message: "유효하지 않은 토큰입니다." });
-  const { accessToken, refreshToken: newRefreshToken } = await generateTokens(
+  if (!user) return response(res, 403, {message: "유효하지 않은 토큰입니다."});
+  const {accessToken, refreshToken: newRefreshToken} = await generateTokens(
     user
   );
   response(res, 200, {
@@ -92,25 +91,25 @@ const generateTokens = async (user) => {
       _id: user._id,
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "30m" }
+    {expiresIn: "30m"}
   );
   const refreshToken = jwt.sign(
     {
       _id: user._id,
     },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" }
+    {expiresIn: "7d"}
   );
 
   const refreshTokens = user.refreshTokens;
-  refreshTokens.push({ token: refreshToken });
+  refreshTokens.push({token: refreshToken});
 
   const updated = await mongo.User.findOneAndUpdate(
-    { _id: user._id },
-    { $set: { refreshTokens: refreshTokens } }
+    {_id: user._id},
+    {$set: {refreshTokens: refreshTokens}}
   );
 
-  return { accessToken, refreshToken };
+  return {accessToken, refreshToken};
 };
 
 // const crypto = require('crypto');

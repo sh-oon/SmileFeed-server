@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { nanoid } = require("nanoid");
+const {nanoid} = require("nanoid");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
@@ -7,11 +7,14 @@ const jwt = require("jsonwebtoken");
 mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    dbName: 'archive'
+  }, (error, db) => {
+    if (error) {
+      console.log("Error connecting to database", error);
+    } else {
+      console.log("Connected to database");
+    }
   })
-  .then(() => console.log("MongoDB Connected..."))
-  .catch((err) => console.log(err));
 
 // mongoose 연결 확인
 const db = mongoose.connection;
@@ -43,13 +46,13 @@ const userSchema = new mongoose.Schema({
   mobile: String,
   birth: String,
   gender: String,
-  refreshTokens: [{ token: String, createdAt: { type: Date, expires: '7d', default: Date.now}}],
+  refreshTokens: [{token: String, createdAt: {type: Date, expires: '7d', default: Date.now}}],
 });
 
 
 userSchema.pre('save', function (next) {
   let user = this;
-  User.findOne({ email: user.email }, function (err, existingUser) {
+  User.findOne({email: user.email}, function (err, existingUser) {
     if (err) {
       return next(err);
     }
@@ -61,7 +64,7 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign(
+  return jwt.sign(
     {
       _id: this._id,
       name: this.name,
@@ -73,7 +76,6 @@ userSchema.methods.generateAuthToken = function () {
       // expiresIn: "1h",
     }
   );
-  return token;
 }
 
 const diarySchema = new mongoose.Schema({
@@ -83,8 +85,8 @@ const diarySchema = new mongoose.Schema({
   emotion: String,
   image: String,
   thumbnail: String,
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
+  createdAt: {type: Date, default: Date.now},
+  updatedAt: {type: Date, default: Date.now},
 });
 
 const settingSchema = new mongoose.Schema({
